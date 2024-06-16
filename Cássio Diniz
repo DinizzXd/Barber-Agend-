@@ -1,0 +1,954 @@
+package com.mycompany.main;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * Classe que representa um cliente na barbearia.
+ * Contém informações pessoais do cliente, como nome e telefone.
+ */
+class Cliente {
+    private final String nome;
+    private final String telefone;
+
+    /**
+     * Constrói um objeto Cliente com o nome e o telefone fornecidos.
+     *
+     * @param nome O nome do cliente.
+     * @param telefone O telefone do cliente.
+     */
+    public Cliente(String nome, String telefone) {
+        this.nome = nome;
+        this.telefone = telefone;
+    }
+
+    /**
+     * Retorna o nome do cliente.
+     *
+     * @return O nome do cliente.
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * Retorna o telefone do cliente.
+     *
+     * @return O telefone do cliente.
+     */
+    public String getTelefone() {
+        return telefone;
+    }
+}
+
+/**
+ * Classe que representa um serviço disponível na barbearia.
+ * Inclui código, descrição e preço do serviço.
+ */
+class Servico {
+    private final String codigo;
+    private final String descricao;
+    private final double preco;
+
+    /**
+     * Constrói um objeto Servico com os detalhes fornecidos.
+     *
+     * @param codigo O código do serviço.
+     * @param descricao A descrição do serviço.
+     * @param preco O preço do serviço.
+     */
+    public Servico(String codigo, String descricao, double preco) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.preco = preco;
+    }
+
+    /**
+     * Retorna o código do serviço.
+     *
+     * @return O código do serviço.
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * Retorna a descrição do serviço.
+     *
+     * @return A descrição do serviço.
+     */
+    public String getDescricao() {
+        return descricao;
+    }
+
+    /**
+     * Retorna o preço do serviço.
+     *
+     * @return O preço do serviço.
+     */
+    public double getPreco() {
+        return preco;
+    }
+}
+
+/**
+ * Classe que gerencia a lista de serviços disponíveis.
+ * Fornece métodos para acessar e buscar serviços.
+ */
+class ListaServicos {
+    private static final List<Servico> servicos = new ArrayList<>();
+
+    static {
+        servicos.add(new Servico("S1", "Corte de cabelo", 30.0));
+        servicos.add(new Servico("S2", "Barba", 20.0));
+        servicos.add(new Servico("S3", "Penteado", 40.0));
+        servicos.add(new Servico("S4", "Coloração", 50.0));
+    }
+
+    /**
+     * Retorna a lista de serviços disponíveis.
+     *
+     * @return A lista de serviços disponíveis.
+     */
+    public static List<Servico> getServicos() {
+        return servicos;
+    }
+
+    /**
+     * Busca um serviço pelo código.
+     *
+     * @param codigo O código do serviço a ser buscado.
+     * @return O serviço correspondente ao código ou null se não encontrado.
+     */
+    public static Servico getServicoByCodigo(String codigo) {
+        for (Servico servico : servicos) {
+            if (servico.getCodigo().equals(codigo)) {
+                return servico;
+            }
+        }
+        return null;
+    }
+}
+
+/**
+ * Classe que representa um agendamento na barbearia.
+ * Contém informações sobre o cliente, horário, dia, serviços escolhidos, barbeiro e forma de pagamento.
+ */
+class Agendamento {
+    private final Cliente cliente;
+    private final String horario;
+    private final String dia;
+    private final List<Servico> servicos;
+    private final String barbeiro;
+    private final String formaPagamento;
+
+    /**
+     * Constrói um objeto Agendamento com os detalhes fornecidos.
+     *
+     * @param cliente O cliente que está agendando.
+     * @param horario O horário do agendamento.
+     * @param dia O dia do agendamento.
+     * @param servicos A lista de serviços escolhidos.
+     * @param barbeiro O barbeiro escolhido.
+     * @param formaPagamento A forma de pagamento escolhida.
+     */
+    public Agendamento(Cliente cliente, String horario, String dia, List<Servico> servicos, String barbeiro, String formaPagamento) {
+        this.cliente = cliente;
+        this.horario = horario;
+        this.dia = dia;
+        this.servicos = servicos;
+        this.barbeiro = barbeiro;
+        this.formaPagamento = formaPagamento;
+    }
+
+    /**
+     * Retorna o cliente do agendamento.
+     *
+     * @return O cliente do agendamento.
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * Retorna o horário do agendamento.
+     *
+     * @return O horário do agendamento.
+     */
+    public String getHorario() {
+        return horario;
+    }
+
+    /**
+     * Retorna o dia do agendamento.
+     *
+     * @return O dia do agendamento.
+     */
+    public String getDia() {
+        return dia;
+    }
+
+    /**
+     * Retorna a lista de serviços escolhidos.
+     *
+     * @return A lista de serviços escolhidos.
+     */
+    public List<Servico> getServicos() {
+        return servicos;
+    }
+
+    /**
+     * Retorna o barbeiro escolhido para o agendamento.
+     *
+     * @return O barbeiro escolhido.
+     */
+    public String getBarbeiro() {
+        return barbeiro;
+    }
+
+    /**
+     * Retorna a forma de pagamento escolhida.
+     *
+     * @return A forma de pagamento escolhida.
+     */
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    /**
+     * Retorna uma representação em String do agendamento.
+     *
+     * @return Uma String que representa o agendamento.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cliente: ").append(cliente.getNome())
+          .append(", Telefone: ").append(cliente.getTelefone())
+          .append(", Dia: ").append(dia)
+          .append(", Horário: ").append(horario)
+          .append(", Barbeiro: ").append(barbeiro)
+          .append(", Forma de Pagamento: ").append(formaPagamento)
+          .append(", Serviços: ");
+
+        for (Servico servico : servicos) {
+            sb.append(servico.getDescricao()).append(" (R$ ").append(servico.getPreco()).append(") ");
+        }
+        return sb.toString();
+    }
+}
+
+/**
+ * Classe que representa uma forma de pagamento.
+ */
+class FormaPagamento {
+    private final String tipo;
+
+    /**
+     * Constrói um objeto FormaPagamento com o tipo fornecido.
+     *
+     * @param tipo O tipo de forma de pagamento.
+     */
+    public FormaPagamento(String tipo) {
+        this.tipo = tipo;
+    }
+
+    /**
+     * Retorna o tipo de forma de pagamento.
+     *
+     * @return O tipo de forma de pagamento.
+     */
+    public String getTipo() {
+        return tipo;
+    }
+}
+
+/**
+ * Classe que gerencia a lista de formas de pagamento disponíveis.
+ */
+class ListaFormasPagamento {
+    private static final List<FormaPagamento> formasPagamento = new ArrayList<>();
+
+    static {
+        formasPagamento.add(new FormaPagamento("Dinheiro"));
+        formasPagamento.add(new FormaPagamento("Cartão de crédito"));
+        formasPagamento.add(new FormaPagamento("Cartão de débito"));
+        formasPagamento.add(new FormaPagamento("Pix"));
+    }
+
+    /**
+     * Retorna a lista de formas de pagamento disponíveis.
+     *
+     * @return A lista de formas de pagamento disponíveis.
+     */
+    public static List<FormaPagamento> getFormasPagamento() {
+        return formasPagamento;
+    }
+
+    /**
+     * Busca uma forma de pagamento pelo índice.
+     *
+     * @param indice O índice da forma de pagamento na lista.
+     * @return A forma de pagamento correspondente ao índice.
+     */
+    public static FormaPagamento getFormaPagamentoByIndice(int indice) {
+        return formasPagamento.get(indice);
+    }
+}
+
+/**
+ * Classe que gerencia os horários disponíveis para agendamento.
+ */
+class Horario {
+    private static final String[] HORARIOS = {"07:30", "08:30", "09:00", "10:00", "11:00", "14:00", "15:00"};
+
+    /**
+     * Retorna a lista de horários disponíveis.
+     *
+     * @return Um array de strings representando os horários disponíveis.
+     */
+    public static String[] getHorarios() {
+        return HORARIOS;
+    }
+}
+
+/**
+ * Classe que gerencia os barbeiros disponíveis na barbearia.
+ */
+class Barbeiro {
+    private static final String[] BARBEIROS = {"Cássio", "Lucas", "Gringo", "Guilherme", "Cauã"};
+
+    /**
+     * Retorna a lista de barbeiros disponíveis.
+     *
+     * @return Um array de strings representando os barbeiros disponíveis.
+     */
+    public static String[] getBarbeiros() {
+        return BARBEIROS;
+    }
+}
+
+/**
+ * Classe que gerencia a agenda de agendamentos.
+ * Permite agendar e desmarcar horários para diferentes barbeiros.
+ */
+class Agenda {
+    private final Agendamento[][] agenda;
+
+    /**
+     * Constrói um objeto Agenda inicializando a matriz de agendamentos.
+     */
+    public Agenda() {
+        this.agenda = new Agendamento[Horario.getHorarios().length][Barbeiro.getBarbeiros().length];
+    }
+
+    /**
+     * Agenda um novo agendamento na agenda.
+     *
+     * @param horario O horário do agendamento.
+     * @param dia O dia do agendamento.
+     * @param barbeiro O barbeiro escolhido.
+     * @param agendamento O objeto Agendamento contendo os detalhes do agendamento.
+     * @return {@code true} se o agendamento for bem-sucedido, caso contrário {@code false}.
+     */
+    public boolean agendar(String horario, String dia, String barbeiro, Agendamento agendamento) {
+        int indiceHorario = encontrarIndiceHorario(horario);
+        int indiceBarbeiro = encontrarIndiceBarbeiro(barbeiro);
+        if (indiceHorario != -1 && indiceBarbeiro != -1 && agenda[indiceHorario][indiceBarbeiro] == null) {
+            agenda[indiceHorario][indiceBarbeiro] = agendamento;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Desmarca um agendamento na agenda.
+     *
+     * @param horario O horário do agendamento a ser desmarcado.
+     * @param dia O dia do agendamento a ser desmarcado.
+     * @param barbeiro O barbeiro do agendamento a ser desmarcado.
+     * @return {@code true} se a desmarcação for bem-sucedida, caso contrário {@code false}.
+     */
+    public boolean desmarcar(String horario, String dia, String barbeiro) {
+        int indiceHorario = encontrarIndiceHorario(horario);
+        int indiceBarbeiro = encontrarIndiceBarbeiro(barbeiro);
+        if (indiceHorario != -1 && indiceBarbeiro != -1 && agenda[indiceHorario][indiceBarbeiro] != null) {
+            agenda[indiceHorario][indiceBarbeiro] = null;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Verifica se há agendamentos na agenda.
+     *
+     * @return {@code true} se houver agendamentos, caso contrário {@code false}.
+     */
+    public boolean temAgendamentos() {
+        for (Agendamento[] linha : agenda) {
+            for (Agendamento agendamento : linha) {
+                if (agendamento != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retorna a matriz de agendamentos.
+     *
+     * @return A matriz de agendamentos.
+     */
+    public Agendamento[][] getAgenda() {
+        return agenda;
+    }
+
+    /**
+     * Encontra o índice do horário na lista de horários disponíveis.
+     *
+     * @param horario O horário a ser buscado.
+     * @return O índice do horário na lista ou -1 se não encontrado.
+     */
+    public int encontrarIndiceHorario(String horario) {
+        String[] horarios = Horario.getHorarios();
+        for (int i = 0; i < horarios.length; i++) {
+            if (horarios[i].equals(horario)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Encontra o índice do barbeiro na lista de barbeiros disponíveis.
+     *
+     * @param barbeiro O barbeiro a ser buscado.
+     * @return O índice do barbeiro na lista ou -1 se não encontrado.
+     */
+    public int encontrarIndiceBarbeiro(String barbeiro) {
+        String[] barbeiros = Barbeiro.getBarbeiros();
+        for (int i = 0; i < barbeiros.length; i++) {
+            if (barbeiros[i].equals(barbeiro)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+/**
+ * Classe que gera relatórios diários da barbearia.
+ * Inclui agendamentos realizados, desmarcados e receita total.
+ */
+class RelatorioDiario {
+    private final List<Agendamento> agendamentosDiarios = new ArrayList<>();
+    private final List<Agendamento> agendamentosDesmarcados = new ArrayList<>();
+
+    /**
+     * Registra um agendamento no relatório diário.
+     *
+     * @param agendamento O agendamento a ser registrado.
+     */
+    public void registrarAgendamento(Agendamento agendamento) {
+        agendamentosDiarios.add(agendamento);
+    }
+
+    /**
+     * Registra uma desmarcação no relatório diário.
+     *
+     * @param agendamento O agendamento a ser registrado como desmarcado.
+     */
+    public void registrarDesmarcacao(Agendamento agendamento) {
+        agendamentosDesmarcados.add(agendamento);
+    }
+
+    /**
+     * Gera e exibe o relatório diário.
+     * Inclui agendamentos realizados, desmarcados e receita total.
+     */
+    public void gerarRelatorio() {
+        System.out.println("\n-----------------------------");
+        System.out.println("  RELATÓRIO DIÁRIO  ");
+        System.out.println("-----------------------------");
+
+        if (agendamentosDiarios.isEmpty() && agendamentosDesmarcados.isEmpty()) {
+            System.out.println("Nenhum agendamento realizado ou desmarcado hoje.");
+            System.out.println("-----------------------------");
+            return;
+        }
+
+        double totalReceita = calcularTotalReceita();
+
+        System.out.println("Agendamentos Realizados:");
+        for (Agendamento agendamento : agendamentosDiarios) {
+            System.out.println(agendamento);
+        }
+
+        System.out.println("\nAgendamentos Desmarcados:");
+        for (Agendamento agendamento : agendamentosDesmarcados) {
+            System.out.println("Cliente: " + agendamento.getCliente().getNome() + " desmarcou o(s) serviço(s):");
+            for (Servico servico : agendamento.getServicos()) {
+                System.out.println(" - " + servico.getDescricao() + " (R$ " + servico.getPreco() + ")");
+            }
+        }
+
+        System.out.println("-----------------------------");
+        System.out.printf("Total arrecadado: R$ %.2f\n", totalReceita);
+        System.out.println("-----------------------------");
+    }
+
+    /**
+     * Calcula a receita total dos agendamentos realizados no dia.
+     *
+     * @return A receita total.
+     */
+    private double calcularTotalReceita() {
+        double totalReceita = 0.0;
+        for (Agendamento agendamento : agendamentosDiarios) {
+            if (!agendamentosDesmarcados.contains(agendamento)) {
+                for (Servico servico : agendamento.getServicos()) {
+                    totalReceita += servico.getPreco();
+                }
+            }
+        }
+        return totalReceita;
+    }
+}
+
+/**
+ * Classe que gerencia a interface do cliente.
+ * Permite visualizar serviços, agendar e desmarcar horários.
+ */
+class ClienteInterface {
+    private final Scanner scanner = new Scanner(System.in);
+    private final Agenda agenda;
+    private final RelatorioDiario relatorio;
+
+    /**
+     * Constrói uma interface para interação com o cliente.
+     *
+     * @param agenda A agenda da barbearia.
+     * @param relatorio O relatório diário da barbearia.
+     */
+    public ClienteInterface(Agenda agenda, RelatorioDiario relatorio) {
+        this.agenda = agenda;
+        this.relatorio = relatorio;
+    }
+
+    /**
+     * Exibe o menu principal da interface do cliente.
+     * Permite escolher entre visualizar serviços, agendar e desmarcar horários.
+     */
+    public void exibirMenu() {
+        while (true) {
+            System.out.println("\n-----------------------------");
+            System.out.println("  MENU DO CLIENTE  ");
+            System.out.println("-----------------------------");
+            System.out.println("Escolha uma opção:");
+            System.out.println("1. Ver serviços oferecidos");
+            System.out.println("2. Agendar horário");
+            System.out.println("3. Desmarcar agendamento");
+            System.out.println("4. Sair");
+            System.out.println("-----------------------------");
+            System.out.print("Opção: ");
+
+            int opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1 -> verServicos();
+                case 2 -> agendarHorario();
+                case 3 -> desmarcarAgendamento();
+                case 4 -> {
+                    return;
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    /**
+     * Exibe a lista de serviços oferecidos pela barbearia.
+     */
+    private void verServicos() {
+        System.out.println("\n-----------------------------");
+        System.out.println("  SERVIÇOS OFERECIDOS  ");
+        System.out.println("-----------------------------");
+        List<Servico> servicos = ListaServicos.getServicos();
+        for (Servico servico : servicos) {
+            System.out.println(servico.getCodigo() + ". " + servico.getDescricao() + " - R$ " + servico.getPreco());
+        }
+        System.out.println("-----------------------------");
+    }
+
+    /**
+     * Solicita os dados e agenda um horário para o cliente.
+     * Inclui a escolha de serviços e forma de pagamento.
+     */
+    private void agendarHorario() {
+        System.out.println("\n-----------------------------");
+        System.out.println("  HORÁRIOS E BARBEIROS DISPONÍVEIS  ");
+        System.out.println("-----------------------------");
+        String[] horarios = Horario.getHorarios();
+        String[] barbeiros = Barbeiro.getBarbeiros();
+        Agendamento[][] agendamentos = agenda.getAgenda();
+        for (int i = 0; i < horarios.length; i++) {
+            for (int j = 0; j < barbeiros.length; j++) {
+                if (agendamentos[i][j] == null) {
+                    System.out.println(horarios[i] + " com " + barbeiros[j] + " - Disponível");
+                } else {
+                    System.out.println(horarios[i] + " com " + barbeiros[j] + " - Indisponível");
+                }
+            }
+        }
+
+        System.out.print("\nEscolha um horário (ex: 09:00): ");
+        String horarioEscolhido = scanner.next();
+
+        System.out.print("Digite o dia do agendamento (ex: 15/06/2024): ");
+        String diaEscolhido = scanner.next();
+
+        System.out.println("\nEscolha um barbeiro:");
+        for (int i = 0; i < barbeiros.length; i++) {
+            System.out.println((i + 1) + ". " + barbeiros[i]);
+        }
+
+        System.out.print("\nEscolha um barbeiro (1-5): ");
+        int indiceBarbeiroEscolhido = scanner.nextInt() - 1;
+
+        if (indiceBarbeiroEscolhido < 0 || indiceBarbeiroEscolhido >= barbeiros.length) {
+            System.out.println("\nBarbeiro inválido, tente novamente.");
+            return;
+        }
+
+        String barbeiroEscolhido = barbeiros[indiceBarbeiroEscolhido];
+
+        if (agenda.getAgenda()[agenda.encontrarIndiceHorario(horarioEscolhido)][indiceBarbeiroEscolhido] != null) {
+            System.out.println("\nHorário com este barbeiro já está agendado, tente outro horário ou barbeiro.");
+            return;
+        }
+
+        System.out.print("\nDigite seu nome: ");
+        scanner.nextLine(); // Consumir a nova linha
+        String nomeCliente = scanner.nextLine();
+
+        System.out.print("Digite seu telefone: ");
+        String telefoneCliente = scanner.next();
+
+        Cliente cliente = new Cliente(nomeCliente, telefoneCliente);
+
+        List<Servico> servicosEscolhidos = new ArrayList<>();
+        double valorTotal = 0.0;
+
+        while (true) {
+            verServicos();
+            System.out.print("Escolha um serviço pelo código ou digite 0 para finalizar: ");
+            String codigoServicoEscolhido = scanner.next();
+            if (codigoServicoEscolhido.equals("0")) {
+                break;
+            }
+
+            Servico servicoEscolhido = ListaServicos.getServicoByCodigo(codigoServicoEscolhido);
+            if (servicoEscolhido == null) {
+                System.out.println("\nServiço inválido, tente novamente.");
+            } else {
+                servicosEscolhidos.add(servicoEscolhido);
+                valorTotal += servicoEscolhido.getPreco();
+            }
+        }
+
+        if (servicosEscolhidos.isEmpty()) {
+            System.out.println("\nNenhum serviço escolhido, agendamento cancelado.");
+            return;
+        }
+
+        // Mostrar valor total antes de solicitar a forma de pagamento
+        System.out.printf("\nValor total dos serviços escolhidos: R$ %.2f\n", valorTotal);
+
+        System.out.println("\nEscolha a forma de pagamento:");
+        List<FormaPagamento> formasPagamento = ListaFormasPagamento.getFormasPagamento();
+        for (int i = 0; i < formasPagamento.size(); i++) {
+            System.out.println((i + 1) + ". " + formasPagamento.get(i).getTipo());
+        }
+
+        System.out.print("\nForma de pagamento (1-4): ");
+        int indiceFormaPagamentoEscolhida = scanner.nextInt() - 1;
+
+        if (indiceFormaPagamentoEscolhida < 0 || indiceFormaPagamentoEscolhida >= formasPagamento.size()) {
+            System.out.println("\nForma de pagamento inválida, agendamento cancelado.");
+            return;
+        }
+
+        String formaPagamentoEscolhida = formasPagamento.get(indiceFormaPagamentoEscolhida).getTipo();
+
+        double valorPago = valorTotal;
+        if (formaPagamentoEscolhida.equals("Dinheiro")) {
+            System.out.print("Digite o valor pago: ");
+            valorPago = scanner.nextDouble();
+
+            double troco = valorPago - valorTotal;
+            if (troco < 0) {
+                System.out.println("\nValor pago é insuficiente. Agendamento cancelado.");
+                return;
+            } else {
+                System.out.printf("Troco a ser retornado: R$ %.2f\n", troco);
+            }
+        } else if (formaPagamentoEscolhida.equals("Pix")) {
+            System.out.println("Utilize o código Pix para pagamento: BarberAgend031");
+        }
+
+        Agendamento agendamento = new Agendamento(cliente, horarioEscolhido, diaEscolhido, servicosEscolhidos, barbeiroEscolhido, formaPagamentoEscolhida);
+        if (agenda.agendar(horarioEscolhido, diaEscolhido, barbeiroEscolhido, agendamento)) {
+            relatorio.registrarAgendamento(agendamento); // Registrar no relatório
+            System.out.printf("\nAgendamento realizado com sucesso! Valor total: R$ %.2f\n", valorTotal);
+        } else {
+            System.out.println("\nNão foi possível realizar o agendamento, tente novamente.");
+        }
+    }
+
+    /**
+     * Solicita os dados e desmarca um agendamento do cliente.
+     */
+    private void desmarcarAgendamento() {
+        if (!agenda.temAgendamentos()) {
+            System.out.println("\nNão há agendamentos marcados para desmarcar.");
+            return;
+        }
+
+        // Mostrar agendamentos
+        System.out.println("\n-----------------------------");
+        System.out.println("  AGENDAMENTOS ATUAIS  ");
+        System.out.println("-----------------------------");
+        Agendamento[][] agendamentos = agenda.getAgenda();
+        List<Agendamento> agendamentosLista = new ArrayList<>();
+        int contador = 1;
+        for (Agendamento[] agendamento : agendamentos) {
+            for (int j = 0; j < agendamento.length; j++) {
+                if (agendamento[j] != null) {
+                    System.out.println(contador + ". " + agendamento[j]);
+                    agendamentosLista.add(agendamento[j]);
+                    contador++;
+                }
+            }
+        }
+        System.out.println("-----------------------------");
+
+        System.out.print("Escolha o número do agendamento a ser desmarcado: ");
+        int escolha = scanner.nextInt() - 1;
+
+        if (escolha < 0 || escolha >= agendamentosLista.size()) {
+            System.out.println("Escolha inválida, tente novamente.");
+            return;
+        }
+
+        Agendamento agendamentoDesmarcado = agendamentosLista.get(escolha);
+        String horario = agendamentoDesmarcado.getHorario();
+        String dia = agendamentoDesmarcado.getDia();
+        String barbeiro = agendamentoDesmarcado.getBarbeiro();
+
+
+        if (agenda.desmarcar(horario, dia, barbeiro)) {
+            relatorio.registrarDesmarcacao(agendamentoDesmarcado); // Registrar desmarcação no relatório
+            System.out.println("\nAgendamento desmarcado com sucesso!");
+        } else {
+            System.out.println("\nNão foi possível desmarcar o agendamento, verifique os dados e tente novamente.");
+        }
+    }
+}
+
+/**
+ * Classe que gerencia a interface do barbeiro.
+ * Permite verificar serviços agendados, desmarcar agendamentos e gerar relatórios diários.
+ */
+class BarbeiroInterface {
+    private final Scanner scanner = new Scanner(System.in);
+    private final Agenda agenda;
+    private final RelatorioDiario relatorio;
+
+    /**
+     * Constrói uma interface para interação com o barbeiro.
+     *
+     * @param agenda A agenda da barbearia.
+     * @param relatorio O relatório diário da barbearia.
+     */
+    public BarbeiroInterface(Agenda agenda, RelatorioDiario relatorio) {
+        this.agenda = agenda;
+        this.relatorio = relatorio;
+    }
+
+    /**
+     * Exibe o menu principal da interface do barbeiro.
+     * Permite escolher entre verificar serviços agendados, desmarcar e gerar relatórios.
+     */
+    public void exibirMenu() {
+        while (true) {
+            System.out.println("\n-----------------------------");
+            System.out.println("  MENU DO BARBEIRO  ");
+            System.out.println("-----------------------------");
+            System.out.println("Escolha uma opção:");
+            System.out.println("1. Verificar serviços agendados");
+            System.out.println("2. Desmarcar agendamento");
+            System.out.println("3. Gerar relatório diário");
+            System.out.println("4. Sair");
+            System.out.println("-----------------------------");
+            System.out.print("Opção: ");
+
+            int opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1 -> verificarServicosAgendados();
+                case 2 -> desmarcarAgendamento();
+                case 3 -> gerarRelatorioDiario();
+                case 4 -> {
+                    return;
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    /**
+     * Exibe os serviços agendados.
+     */
+    private void verificarServicosAgendados() {
+        System.out.println("\n-----------------------------");
+        System.out.println("  SERVIÇOS AGENDADOS  ");
+        System.out.println("-----------------------------");
+        if (!agenda.temAgendamentos()) {
+            System.out.println("Não há nenhum serviço agendado.");
+            return;
+        }
+        Agendamento[][] agendamentos = agenda.getAgenda();
+        for (int i = 0; i < agendamentos.length; i++) {
+            for (int j = 0; j < agendamentos[i].length; j++) {
+                if (agendamentos[i][j] != null) {
+                    Agendamento agendamento = agendamentos[i][j];
+                    System.out.println(Horario.getHorarios()[i] + " com " + Barbeiro.getBarbeiros()[j] + ": " + agendamento);
+                }
+            }
+        }
+        System.out.println("-----------------------------");
+    }
+
+    /**
+     * Solicita os dados e desmarca um agendamento do cliente.
+     */
+    private void desmarcarAgendamento() {
+        if (!agenda.temAgendamentos()) {
+            System.out.println("\nNão há agendamentos marcados para desmarcar.");
+            return;
+        }
+
+        // Mostrar agendamentos
+        System.out.println("\n-----------------------------");
+        System.out.println("  AGENDAMENTOS ATUAIS  ");
+        System.out.println("-----------------------------");
+        Agendamento[][] agendamentos = agenda.getAgenda();
+        List<Agendamento> agendamentosLista = new ArrayList<>();
+        int contador = 1;
+        for (Agendamento[] agendamento : agendamentos) {
+            for (Agendamento agendamento1 : agendamento) {
+                if (agendamento1 != null) {
+                    System.out.println(contador + ". " + agendamento1);
+                    agendamentosLista.add(agendamento1);
+                    contador++;
+                }
+            }
+        }
+        System.out.println("-----------------------------");
+
+        System.out.print("Escolha o número do agendamento a ser desmarcado: ");
+        int escolha = scanner.nextInt() - 1;
+
+        if (escolha < 0 || escolha >= agendamentosLista.size()) {
+            System.out.println("Escolha inválida, tente novamente.");
+            return;
+        }
+
+        Agendamento agendamentoDesmarcado = agendamentosLista.get(escolha);
+        String horario = agendamentoDesmarcado.getHorario();
+        String dia = agendamentoDesmarcado.getDia();
+        String barbeiro = agendamentoDesmarcado.getBarbeiro();
+
+
+        if (agenda.desmarcar(horario, dia, barbeiro)) {
+            relatorio.registrarDesmarcacao(agendamentoDesmarcado); // Registrar desmarcação no relatório
+            System.out.println("\nAgendamento desmarcado com sucesso!");
+        } else {
+            System.out.println("\nNão foi possível desmarcar o agendamento, verifique os dados e tente novamente.");
+        }
+    }
+
+    /**
+     * Gera e exibe o relatório diário de agendamentos.
+     */
+    private void gerarRelatorioDiario() {
+        relatorio.gerarRelatorio();
+    }
+}
+
+/**
+ * Classe que realiza a autenticação dos usuários.
+ * Valida o login para clientes e barbeiros.
+ */
+class Autenticacao {
+    /**
+     * Autentica o usuário com base no tipo de usuário e senha fornecidos.
+     *
+     * @param tipoUsuario O tipo de usuário (cliente ou barbeiro).
+     * @param senha A senha fornecida pelo usuário.
+     * @return {@code true} se a autenticação for bem-sucedida, caso contrário {@code false}.
+     */
+    public static boolean autenticar(String tipoUsuario, String senha) {
+        if (tipoUsuario.equalsIgnoreCase("cliente") && senha.equals("123")) {
+            return true;
+        } else if (tipoUsuario.equalsIgnoreCase("barbeiro") && senha.equals("1234")) {
+            return true;
+        }
+        return false;
+    }
+}
+
+/**
+ * Classe principal que inicia o programa.
+ * Realiza o login e direciona o usuário para a interface apropriada.
+ */
+public class Main {
+    /**
+     * Método principal que inicia a aplicação.
+     * Solicita login e direciona para a interface de cliente ou barbeiro.
+     *
+     * @param args Argumentos da linha de comando.
+     */
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Agenda agenda = new Agenda();
+        RelatorioDiario relatorio = new RelatorioDiario();
+
+        while (true) {
+            System.out.println("\n-----------------------------");
+            System.out.println("  LOGIN  ");
+            System.out.println("-----------------------------");
+            System.out.print("Digite o tipo de usuário (cliente/barbeiro): ");
+            String tipoUsuario = scanner.next().toLowerCase();
+
+            System.out.print("Digite a senha: ");
+            String senha = scanner.next();
+
+            if (Autenticacao.autenticar(tipoUsuario, senha)) {
+                System.out.println("Login bem-sucedido!");
+
+                if (tipoUsuario.equals("cliente")) {
+                    ClienteInterface clienteInterface = new ClienteInterface(agenda, relatorio);
+                    clienteInterface.exibirMenu();
+                } else if (tipoUsuario.equals("barbeiro")) {
+                    BarbeiroInterface barbeiroInterface = new BarbeiroInterface(agenda, relatorio);
+                    barbeiroInterface.exibirMenu();
+                }
+            } else {
+                System.out.println("Login falhou. Tente novamente.");
+            }
+        }
+    }
+}
